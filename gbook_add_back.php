@@ -1,12 +1,14 @@
 <?php
  echo "<html>\n";
  echo "<head>\n";
- echo "title>\n";
+ echo "<title>\n";
  echo "留言板添加模块后台处理\n";
- echo "</title>";
- echo "</head>";
+ echo "</title>\n";
+ echo "</head>\n";
  echo "<body>\n";
- if(!$_post[username] || !$_post[content])   //如果没有用户名或者留言内容,POST的是如何传递参数的呢？
+ //echo $_POST[username];
+ //echo $_POST[content];
+ if(!$_POST[username] || !$_POST[content])   //如果没有用户名或者留言内容,POST的是如何传递参数的呢？
  {
   echo "<meta http-equiv=\"refresh\" content=\"2; url=gbook_add_front.php\">\n";  //输出的是？？？
   echo "没有填写的用户名或者留言内容!\n";
@@ -16,10 +18,11 @@
   }
 else
   {
-   $re_id=$_post[re_id];
+   echo $_POST[re_id];
+   $re_id=$_POST[re_id];
    include "common.php";
    $sql="select re_id from $t_name where id='$re_id'";    //注意 ''里$re_id的值在什么时候传到SQL数据库的额？
-   $tem=mysql_getch_row(mysql_query($sql,$my_connect));
+   $tem=mysql_fetch_row(mysql_query($sql,$my_connect));
    if($tem[0]!=0)                                         // 如果回复的留言不是主留言
     {
       echo "<meta http-equiv=\"refesh\" content=\"2; url=gbook_show.php\">\n";
@@ -28,7 +31,7 @@ else
     }
   else
      {
-     $username=htmlsapecialchars($_POST[username]);        //获取用户名,学习htmlspecialchars函数
+     $username=htmlspecialchars($_POST[username]);        //获取用户名,学习htmlspecialchars函数
      if($_POST[title])                                     //如果有标题
         {
          $title=htmlspecialchars($_POST[title]);
@@ -39,7 +42,7 @@ else
          }
       $content=htmlspecialchars($_POST[content]);       //获取内容，并转换换行符
       $content=ereg_replace(" ","&nbsp;",$content);     //转换空格
-      $content=n12br($connect);                         //转换回车换行符
+      $content=nl2br($connect);                         //转换回车换行符,是NL2BR 不是N12BR
       $face=$_POST[face];
       $time=date("y-m-d h:i:s");                        //获取留言时间
       if($re_id!=0)                                     //如果是回复留言

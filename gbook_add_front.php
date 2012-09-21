@@ -7,10 +7,7 @@ else
 {
  $re_id=$_GET[id];
 }
-
-
 ?>
-
 <html>
 <head>
 <title>留言添加前台页面</title>
@@ -30,10 +27,10 @@ function go(form)
        form.username.focus();
        return (false);            //为什么return 后边有个空格？？？
       }
-     if(fom.usercontent.value=="")
+     if(form.content.value=="")
       {
         alert("请输入留言内容!");
-        form.usercontent.focus();
+        form.content.focus();
         return (false);
       }
     }
@@ -46,7 +43,7 @@ function go(form)
 <a href="gbook_show.php">返回首页</a>
 <p>
 <table border="1">
- <form action="gbook_show.php" method="post" name="f" onsubmit="rerurn go(this)">
+ <form action="gbook_add_back.php" method="post" name="f" onsubmit="return go(this)">
  <input type="hidden" name="re_id" value="<?php echo $re_id?>">
  <tr>
    <td><font color="#ff0000">*</font>作者名称：</td>
@@ -93,13 +90,3 @@ function go(form)
 </center>
 </body>
 </html>
-    
-
-
-
-
-
-
-
-      }
-
