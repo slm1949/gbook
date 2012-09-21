@@ -8,7 +8,7 @@ echo "</head>\n";
 echo "<body>\n";
 echo "<center>\n";
 echo "<font size=5 color=#ff0000>\n";           //字体大小5，颜色=?
-echo "数据库留言薄显示模块"；
+echo "数据库留言薄显示模块";
 echo "</font>\n";
 echo "<p>";
 echo "<a href=\"gbook_add_front.php\">添加留言</a>";//这里加深了 \ ,转义符的理解
@@ -77,7 +77,7 @@ while($row=mysql_fetch_arrary($result))               //遍历结果数组
   echo "</td>\n";
   echo "</tr>";
   echo "<tr>\n";                          //好久要加\n的回车输出？
-  cho "<td>";
+  echo "<td>";
   echo $row[content];
   echo "</td>\n";
   echo "</tr>";
@@ -94,7 +94,7 @@ while($row=mysql_fetch_arrary($result))               //遍历结果数组
     echo "<tr>\n";
     echo "<td rowspan=2><img src=img\\".$sub_row[face]."></td>";
     echo "<td>";
-    echo "回复."$j.":";
+    echo "回复".$j.":";
     echo $sub_row[title];
     echo "|";
     echo "作者".$sub_row[username].":回复于".$sub_row[time]."\n";
