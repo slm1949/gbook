@@ -13,8 +13,6 @@ echo "</font>\n";
 echo "<p>";
 echo "<a href=\"gbook_add_front.php\">添加留言</a>";//这里加深了 \ ,转义符的理解
 echo "<p>\n";
-
-
 if(!$_GET[page])                                //获取提交的当前显示页，我想知道怎么获得的呢???为什么$_GET 后跟着中括号？
 {
   $page=1;                                      //当前显示第一页，？？?
@@ -54,9 +52,9 @@ echo "<table border=\"1\">";
 $temp=($page-1)*$p_num;
 /*一下代码定义SQL语句，从表中读取主留言，并按最后回复日期降序排列，每页从偏移量$temp开始
   最多显示$p_num条留言*/
-$sql="select * from t_name where re_id=0 order by retime decs limit $temp,$p_num";   //学习这条SQL
-$result=mysql_query($sql,$my_connect);
-while($row=mysql_fetch_arrary($result))               //遍历结果数组
+$sql="select * from $t_name where re_id=0 order by re_time desc limit $temp,$p_num";   //学习这条SQL  desc写错了（decs)
+$result=mysql_query($sql,$my_connect) or die(mysql_error());
+while($row=mysql_fetch_array($result))               //遍历结果数组
 {
   $temp++;                                            //循环变量自增
   echo "<tr>";
@@ -71,9 +69,9 @@ while($row=mysql_fetch_arrary($result))               //遍历结果数组
   echo "|";
   echo "<a href=\"gbook_add_front.php?id=".$row[id]."\">回复</a>";
   echo "[".$row[re_num]."]\n";
-  echo "<a href=\"gbook_modify.php?action=edit&id=".$row[id]."\"编辑></a>";  //url传递的传值 action=edit
+  echo "<a href=\"gbook_modify_front.php?action=edit&id=".$row[id]."\">编辑</a>";  //url传递的传值 action=edit
   echo "|";
-  echo "<a href=\"gbook_modify.php?action=del&id=".$row[id]."\"onclick=\"return conf()\">删除</a>";  //什么机制调用script的conf()??
+  echo "<a href=\"gbook_modify_front.php?action=del&id=".$row[id]."\" onclick=\"return conf()\">删除</a>";  //什么机制调用script的conf()??,onclick前应该有空格
   echo "</td>\n";
   echo "</tr>";
   echo "<tr>\n";                          //好久要加\n的回车输出？
@@ -85,7 +83,7 @@ while($row=mysql_fetch_arrary($result))               //遍历结果数组
   {
    //定义子SQL语句
    //从所有记录中取出该主留言的回复留言
-   $sub_sql="select * from t_name where re_id='$row[id]' and time>'$row[re_time]'";   //学习其中双引号里面单引号里面变量的方法？？
+   $sub_sql="select * from $t_name where re_id='$row[id]' and time>'$row[re_time]'";   //学习双引号里面单引号里面变量的方法,$变量在SQL语句中的写法
    $result=mysql_query($sub_sql,$my_connect);
    $j=0;
    while($sub_row=mysql_fetch_array($result,my_connect))                //遍历数组sql反馈的结果
@@ -99,9 +97,9 @@ while($row=mysql_fetch_arrary($result))               //遍历结果数组
     echo "|";
     echo "作者".$sub_row[username].":回复于".$sub_row[time]."\n";
     echo "nbsp;|nbsp:";
-    echo "<a href=\"gbook_modify.php?action=edit&id=".$sub_row[id]."\">编辑</a>";   
+    echo "<a href=\"gbook_modify_front.php?action=edit&id=".$sub_row[id]."\">编辑</a>";   
     echo "|";
-    echo "<a href=\"gbook_modify.php?action=del&id=".$sub_row[id]."\" onclick=\"return conf()\">删除</a>";
+    echo "<a href=\"gbook_modify_front.php?action=del&id=".$sub_row[id]."\" onclick=\"return conf()\">删除</a>";
     echo "</td>";
     echo "</tr>";
     echo "<tr>";
@@ -114,7 +112,7 @@ while($row=mysql_fetch_arrary($result))               //遍历结果数组
 }                    //结束 while $row
 echo "</table>";
 echo "<p>";
-if(page_z>1)         //如果总页数大于1，分页显示
+if($page_z>1)         //如果总页数大于1，分页显示
 {
  $prev_page=$page-1;
  $next_page=$page-1;

@@ -53,9 +53,9 @@ else
         {
          $re_time=$time;                                //回复时间为发表留言时间  ？
          }
-      $sql="insert into $t_name(username,,title,content,re_id,face,time,re_time,re_num)
-            values ('$username','$title','$content','$re_id','$face',$time,$re_time','$re_num','0')";
-      $result=mysql_query($sql,$my_connect) or die(mysql_error());   //学习这句
+      $sql="insert into $t_name(username,title,content,re_id,face,time,re_time,re_num)
+            values ('$username','$title','$content','$re_id','$face','$time','$re_time','0')";
+      $result=mysql_query($sql,$my_connect); //or die(mysql_error());   //学习这句
        if($re_id!=0)
          {
            $strsql="update $t_name set re_time='$time',re_num=re_num+1 where id='$re_id'";
@@ -67,8 +67,8 @@ else
         echo "两秒后返回留言首页\n";
      }
   }
-   echo "<body>\n";
-   echo "<html>\n";
+   echo "</body>\n";
+   echo "</html>\n";
  ?>   
       
       

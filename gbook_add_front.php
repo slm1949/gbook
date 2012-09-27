@@ -42,8 +42,9 @@ function go(form)
 <P>
 <a href="gbook_show.php">返回首页</a>
 <p>
-<table border="1">
+
  <form action="gbook_add_back.php" method="post" name="f" onsubmit="return go(this)">
+<table border="1">
  <input type="hidden" name="re_id" value="<?php echo $re_id?>">
  <tr>
    <td><font color="#ff0000">*</font>作者名称：</td>
@@ -85,8 +86,9 @@ function go(form)
  <input type="submit" value="提交选择">
  </td>
  </tr>
- </form>
+
 </table>
+ </form>
 </center>
 </body>
 </html>
