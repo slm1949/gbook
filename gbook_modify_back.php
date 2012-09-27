@@ -16,8 +16,9 @@
        else
           {
             $id=$_POST[id];
+           echo $id;
             include "common.php";
-            $username=htmlapecialchars($_POST[username]);
+            $username=htmlspecialchars($_POST[username]);
             if($_POST[title])                                   //如果有标题
                {
                 $title=htmlspecialchars($_POST[tilte]);
@@ -27,18 +28,19 @@
                  $title="无标题";
                  }
             $content=htmlspecialchars($_POST[content]);
-            $content=ereg_replace(" ","$nsbp;",$content);
-            $content=n12br($content);
+            $content=str_replace(" ","$nsbp;",$content);   //ereg_replace
+            $content=nl2br($content);
             $face=$_POST[face];
-            $strsql="updata $t_name set username='$username',title='$title',content='$content',face='$face' where id='$id'";
-            $result=mysql_query($strsql,$connect) or die(mysql_error());
-            if($result)
-               {
-                 echo "<meta http-equiv=\"refresh\" content \"2; url=gbook_show.php\">\n";
-                 echo "提交留言成功!";
-                 echo "<P>\n";
-                 echo "两秒后返回留言首页\n";
-                }
+            $strsql="update $t_name set username='$username',title='$title',content='$content',face='$face' where id=$id";
+            echo $strsql;
+           // $result=mysql_query($strsql,$my_connect) or die(mysql_error());
+            //if($result)
+              // {
+                // echo "<meta http-equiv=\"refresh\" content \"2; url=gbook_show.php\">\n";
+               //  echo "提交留言成功!";
+              //   echo "<P>\n";
+              //   echo "两秒后返回留言首页\n";
+               // }
               }
    echo "</body>";
    echo "</html>";
