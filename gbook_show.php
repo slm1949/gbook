@@ -130,7 +130,7 @@ if($page_z>1)         //如果总页数大于1，分页显示
     }
   else
     {
-     echo "<a href=gook_show.php?page=".$prev_page.">上一页</a>|";  
+     echo "<a href=gbook_show.php?page=".$prev_page.">上一页</a>|";  
     }
   if($next_page>$page_z)
     {
