@@ -69,9 +69,9 @@ while($row=mysql_fetch_array($result))               //遍历结果数组
   echo "|";
   echo "<a href=\"gbook_add_front.php?id=".$row[id]."\">回复</a>";
   echo "[".$row[re_num]."]\n";
-  echo "<a href=\"gbook_modify_front.php?action=edit&id=".$row[id]."\">编辑</a>";  //url传递的传值 action=edit
+  echo "<a href=\"gbook_manage.php?action=edit&id=".$row[id]."\">编辑</a>";  //url传递的传值 action=edit
   echo "|";
-  echo "<a href=\"gbook_modify_front.php?action=del&id=".$row[id]."\" onclick=\"return conf()\">删除</a>";  //什么机制调用script的conf()??,onclick前应该有空格
+  echo "<a href=\"gbook_manage.php?action=del&id=".$row[id]."\" onclick=\"return conf()\">删除</a>";  //什么机制调用script的conf()??,onclick前应该有空格
   echo "</td>\n";
   echo "</tr>";
   echo "<tr>\n";                          //好久要加\n的回车输出？
