@@ -115,7 +115,7 @@ echo "<p>";
 if($page_z>1)         //如果总页数大于1，分页显示
 {
  $prev_page=$page-1;
- $next_page=$page-1;
+ $next_page=$page+1;
  if($page<1)
   {
    echo "第一页|";
@@ -138,7 +138,7 @@ if($page_z>1)         //如果总页数大于1，分页显示
     }
   else
     {
-      echo "<a href=gbook_show.php?page=".$next_page."下一页</a>|";
+      echo "<a href=gbook_show.php?page=".$next_page.">下一页</a>|";
      }
   if($page>=$page_z)
     {
