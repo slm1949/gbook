@@ -146,7 +146,7 @@ if($page_z>1)         //如果总页数大于1，分页显示
     }
    else
     {
-     echo "<a href=gook_show.php?page=".$page_z.">最后一页</a>";
+     echo "<a href=gbook_show.php?page=".$page_z.">最后一页</a>";
     }
   }
 }                               //结束else ,结束显示的代码
