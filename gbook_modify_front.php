@@ -1,12 +1,12 @@
 <?php
-     if(!$_COOKIE[admin]);
-       {
-         echo "<meta http-equiv=\"refresh\" content=\"2; url=gbook_show.php\">\n";
-         echo "管理员没有登录!\n";
-         echo "<p>\n";
-         echo "两秒后返回留言显示页面\n";
-         exit();
-       }
+     //if(!$_COOKIE[admin]);
+      // {
+      //   echo "<meta http-equiv=\"refresh\" content=\"2; url=gbook_show.php\">\n";
+        // echo "管理员没有登录!\n";
+         //echo "<p>\n";
+        // echo "两秒后返回留言显示页面\n";
+        // exit();
+       //}
      echo "<html>";
      echo "<head>";
      echo "<title>留言修改前台页面</title>";
@@ -47,18 +47,19 @@
              -->
                  </script>";
              echo "<center>";
-             echo "font size=5 color=#ff0000> 留言添加模块前台页面</font>";
+             echo "<font size=5 color=#ff0000> 留言添加模块前台页面</font>";
              echo "<P>";
              echo "<a href=\"gbook_show.php\">返回首页</a>";
              echo "<p>";
              include "common.php";
-             $sql="select *form $t_name where id='$id'";
-             $result=mysql_query($sql,$connect);
+             $sql="select * from $t_name where id=$id";
+             $result=mysql_query($sql,$my_connect);
              $row=mysql_fetch_array($result);
+             echo "<form  action=\"gbook_modify_back.php\" method=\"post\" name=\"f\" onsubmit=\"return go(this)\">";
              echo "<table border=\"1\">";
              echo "<tr>";
              echo "<td><font color=\"#ff0000\">*</font>作者名称:</td>";
-             echo "<td><input type=\"text\" name=\"username\" value=\"".$row[username]."\"</td>";
+             echo "<td><input type=\"text\" name=\"username\" value=\"".$row[username]."\"></td>";
              echo "<td>";
              echo "<select name=\"face\" size=\"1\" onchange=c_img()>
                    <option value=\"1.gif\">五星
@@ -77,8 +78,8 @@
             echo  "<img src=\"img\\1.gif\" name=\"img\">";
             echo "</td></tr>";
             echo "<tr>";
-            echo "<td><font color=\"ff0000\">*<font>留言内容:</td>";
-            echo "<td><textarea=\"content\" cols=\"40\" rows=\"10\">";
+            echo "<td><font color=\"ff0000\">*</font>留言内容:</td>";
+            echo "<td><textarea name=\"content\" cols=\"40\" rows=\"10\">";
             echo $row[content];
             echo "</textarea>";
             echo "</td>";
@@ -87,8 +88,9 @@
             echo "<td>提交留言：</td>";
             echo "<td><input type=\"submit\" value=\"提交选择\"></td>";
             echo "</tr>";
-            echo "</form>";
+           
             echo "</table>";
+            echo "</form>";
           }
              echo "</center>";
              echo "</body>";
