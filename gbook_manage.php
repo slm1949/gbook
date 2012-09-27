@@ -12,7 +12,7 @@
       {
        echo "<html>\n";
        echo "<head>\n";
-       echo "title>\n";
+       echo "<title>\n";
        echo "进入留言管理模块\n";
        echo "</title>\n";
        echo "</head>\n";
@@ -24,14 +24,15 @@
        echo "<p>";
        echo "<a href=\"gbook_show.php\">返回首页</a>";
        echo "<p>\n";
+      
+       echo "<form action=\"gbook_manage.php?id=".$_GET[id]."&action=".$_GET[action]."\"method=\"post\" name=\"f\" onsubmit=\"return go(this)\">";
        echo "<table border=1>";
-       echo "<form action=\"gbook_.php?id=".$_GET[id]."&action=".$_GET[action]."\"method=\"post\" name=\"f\" onsubmit=\"return go(this)\">";
        echo "<tr>";
        echo "<td>";
        echo "管理员名称：";
        echo "</td>";
        echo "<td>";
-       echo "input type=\"text\" name=\"admin\">";
+       echo "<input type=\"text\" name=\"admin\">";
        echo "</td>";
        echo "</tr>";
        echo "<tr>";
@@ -39,7 +40,7 @@
        echo "管理员密码: ";
        echo "</td>";
        echo "<td>";
-       echo "input type=\"password\" name=\"psasword\">";
+       echo "<input type=\"password\" name=\"psasword\">";
        echo "</td>";
        echo "</tr>";
        echo "<tr>";
@@ -58,10 +59,12 @@
         echo "</tr>";
         echo "<tr>";
         echo "<td colspan=2 align=\"center\">";
-        echo "input type=\"button\" value="\上一步\" onclick=\"history.go(-1)\">";
+        echo "<input type=\"button\" value=\"上一步\" onclick=\"history.go(-1)\">";//  学习 onclick的相关
+        echo "<input type=\"submit\" value=\"下一步\">";
         echo "</td>";
         echo "</tr>";
         echo "</table>";
+        echo "</form>";
        }
        else                    //$_POST 为true
           {
@@ -71,13 +74,13 @@
                setcookie("admin",$_POST[admin]);         //学习使用cookie
                if($_GET[action]=="edit")
                  {
-                  $url="gbook_modify_front.php?id=".$_GET[id]:
+                  $url="gbook_modify_front.php?id=".$_GET[id];
                   }
                 else
                   {
                    $url="gbook_del.php?id=".$_GET[id];
                    }
-                echo "meta http-equiv=\"refresh\" content=\"2; url=".$url."\">\n";
+                echo "<meta http-equiv=\"refresh\" content=\"2; url=".$url."\">\n";
                 echo "登录成功!\n";
                 echo "<p>\n";
                 echo "两秒后进入相应操作页面\n";
@@ -85,7 +88,7 @@
                }
             else
               {
-                echo "meta http-equiv=\"refresh\" content=\"2; url=gbook_show.php\">\n";
+                echo "<meta http-equiv=\"refresh\" content=\"2; url=gbook_show.php\">\n";
                 echo "用户名或者密码错误！\n";
                 echo "<p>\n";
                 echo "两秒后返回显示留言\n";
@@ -95,11 +98,5 @@
          }
       echo "</center>";
       echo "</body>";
-      echo "</html>:
+      echo "</html>";
   ?>
-
-
-
-
-
-
