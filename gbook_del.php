@@ -17,21 +17,22 @@
       else
          {
           $id=$_GET[id];
-          include "gbook_show.php";
-          $t_sql="select re_id form t_name where id='$id'";
-          $result=mysql_query($t_sql,$connect);
+          include "common.php";
+          $t_sql="select re_id from $t_name where id=$id";
+          echo $t_sql;
+          $result=mysql_query($t_sql,$my_connect);
           $row=mysql_fetch_array($result);
           if($row[0]!=0)                //如果删除的留言为某主题的回复
                  {
-                   $up_sql="updata $t_name set re_num=re_num-1 where id='$row[0]'";  //修改主题回复数
-                   mysql_query($up_sql,$connect);
-                   $sql="delete from $t_name where id='$id'";
-                   mysql_query($sql,$connect);
+                   $up_sql="updata $t_name set re_num=re_num-1 where id=$row[0]";  //修改主题回复数
+                   mysql_query($up_sql,$my_connect);
+                   $sql="delete from $t_name where id=$id";
+                   mysql_query($sql,$my_connect);
                   }
           else                           //如果留言为主题
                   {
-                   $sql="delete from $t_name where id='$id' or re_id='$id'";  //删除记录的sql语句，删除主题及其回复
-                   mysql_query($sql,$connect);
+                   $sql="delete from $t_name where id=$id or re_id=$id";  //删除记录的sql语句，删除主题及其回复
+                   mysql_query($sql,$my_connect);
                    }
           echo "<meta http-equiv=\"refresh\" content=\"2; url=gbook_show.php\">\n";
           echo "删除留言记录成功\n";
