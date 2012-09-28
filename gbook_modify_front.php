@@ -1,12 +1,11 @@
 <?php
-     //if(!$_COOKIE[admin]);
-      // {
-      //   echo "<meta http-equiv=\"refresh\" content=\"2; url=gbook_show.php\">\n";
-        // echo "管理员没有登录!\n";
-         //echo "<p>\n";
-        // echo "两秒后返回留言显示页面\n";
-        // exit();
-       //}
+        if(!$_COOKIE[admin])       {        //一开始在if后加了分号，打错啊
+         echo "<meta http-equiv=\"refresh\" content=\"2; url=gbook_show.php\">\n";
+         echo "管理员没有登录!\n";
+         echo "<p>\n";
+         echo "两秒后返回留言显示页面\n";
+         exit();
+       }
      echo "<html>";
      echo "<head>";
      echo "<title>留言修改前台页面</title>";
@@ -55,7 +54,7 @@
              $sql="select * from $t_name where id=$id";
              $result=mysql_query($sql,$my_connect);
              $row=mysql_fetch_array($result);
-             echo "<form  action=\"gbook_modify_back.php\" method=\"post\" name=\"f\" onsubmit=\"return go(this)\">";
+             echo "<form  action=\"gbook_modify_back.php\" method=\"post\" name=\"f\" onsubmit=\"return go(this)\">";  //什么意思？
              echo "<table border=\"1\">";
              echo "<tr>";
              echo "<td><font color=\"#ff0000\">*</font>作者名称:</td>";
