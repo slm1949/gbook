@@ -18,10 +18,10 @@
   }
 else
   {
-   echo $_POST[re_id];
+   //echo "回复的id:".$_POST[re_id];
    $re_id=$_POST[re_id];
    include "common.php";
-   $sql="select re_id from $t_name where id='$re_id'";    //注意 ''里$re_id的值在什么时候传到SQL数据库的额？
+   $sql="select re_id from $t_name where id=$re_id";    //注意 ''里$re_id的值在什么时候传到SQL数据库的额？
    $tem=mysql_fetch_row(mysql_query($sql,$my_connect));
    if($tem[0]!=0)                                         // 如果回复的留言不是主留言
     {
@@ -41,8 +41,11 @@ else
           $title="无标题";
          }
       $content=htmlspecialchars($_POST[content]);       //获取内容，并转换换行符
-      $content=ereg_replace(" ","&nbsp;",$content);     //转换空格
-      $content=nl2br($connect);                         //转换回车换行符,是NL2BR 不是N12BR
+      //echo $content;
+      $content=str_replace(" ","&nbsp;",$content);     //转换空格,ereg_replace--改为str_replace
+      //echo "替换空格后".$content;
+      $content=nl2br($content);                         //转换回车换行符,是NL2BR 不是N12BR
+      //echo "转换回车换行符后".$content;
       $face=$_POST[face];
       $time=date("y-m-d h:i:s");                        //获取留言时间
       if($re_id!=0)                                     //如果是回复留言
@@ -54,12 +57,13 @@ else
          $re_time=$time;                                //回复时间为发表留言时间  ？
          }
       $sql="insert into $t_name(username,title,content,re_id,face,time,re_time,re_num)
-            values ('$username','$title','$content','$re_id','$face','$time','$re_time','0')";
-      $result=mysql_query($sql,$my_connect); //or die(mysql_error());   //学习这句
+            values ('$username','$title','$content',$re_id,'$face','$time','$re_time',0)";
+      $result=mysql_query($sql,$my_connect) or die(mysql_error());   //学习这句
+      //echo $sql;
        if($re_id!=0)
          {
-           $strsql="update $t_name set re_time='$time',re_num=re_num+1 where id='$re_id'";
-           $result=mysql_query($strsql,$connect) or die(mysql_error());
+           $strsql="update $t_name set re_time='$time',re_num=re_num+1 where id=$re_id";
+           $result=mysql_query($strsql,$my_connect) or die(mysql_error());
           }
         echo "<meta http-equiv=\"refresh\" content=\"2; url=gbook_show.php\">\n";     //这是一句html?
         echo "提交留言成功!\n";

@@ -25,7 +25,7 @@
        echo "<a href=\"gbook_show.php\">返回首页</a>";
        echo "<p>\n";
       
-       echo "<form action=\"gbook_manage.php?id=".$_GET[id]."&action=".$_GET[action]."\"method=\"post\" name=\"f\" onsubmit=\"return go(this)\">";
+       echo "<form action=\"gbook_manage.php?id=".$_GET[id]."&action=".$_GET[action]."\" method=\"post\" name=\"f\" onsubmit=\"return go(this)\">";
        echo "<table border=1>";
        echo "<tr>";
        echo "<td>";
@@ -69,7 +69,7 @@
        else                    //$_POST 为true
           {
             include "common.php";
-            if($_POST[admin]==$admin_name && $POST[password]==$admin_pass)
+            if($_POST[admin]==$admin_name && $_POST[password]==$admin_pass)
               {
                setcookie("admin",$_POST[admin]);         //学习使用cookie
                if($_GET[action]=="edit")

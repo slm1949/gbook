@@ -59,6 +59,13 @@
              echo "<tr>";
              echo "<td><font color=\"#ff0000\">*</font>作者名称:</td>";
              echo "<td><input type=\"text\" name=\"username\" value=\"".$row[username]."\"></td>";
+             echo "<input type=\"hidden\" name=\"id\" value=".$id.">";    //还是.$id. 
+             echo "</tr>";
+             echo  "<tr>";
+             echo  "<td>留言标题：</td>";
+             echo "<td><input type=\"text\" name=\"title\" value=\"".$row[title]."\"></td>";
+             echo "</tr>";
+             echo "<tr>";
              echo "<td>";
              echo "<select name=\"face\" size=\"1\" onchange=c_img()>
                    <option value=\"1.gif\">五星

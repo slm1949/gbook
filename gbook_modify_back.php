@@ -30,6 +30,7 @@
             $content=htmlspecialchars($_POST[content]);
             $content=str_replace(" ","$nsbp;",$content);   //ereg_replace
             $content=nl2br($content);
+           // echo $content;
             $face=$_POST[face];
             $strsql="update $t_name set username='$username',title='$title',content='$content',face='$face' where id=$id";
             //echo $strsql;

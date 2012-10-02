@@ -1,12 +1,14 @@
 <?php
-if($_GET[id])
+if(!$_GET[id])
 {
+ echo  "说明没有传递id成功";
  $re_id=0;
 }
 else
 {
  $re_id=$_GET[id];
 }
+echo "获得re_id是：".$re_id;
 ?>
 <html>
 <head>

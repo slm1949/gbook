@@ -56,6 +56,7 @@ $sql="select * from $t_name where re_id=0 order by re_time desc limit $temp,$p_n
 $result=mysql_query($sql,$my_connect) or die(mysql_error());
 while($row=mysql_fetch_array($result))               //遍历结果数组
 {
+  //print_r($row);
   $temp++;                                            //循环变量自增
   echo "<tr>";
   echo "<td rowspan=2><img src=img\\".$row[face]."></td>";   //src  后跟个img没明白 什么个情况？？
@@ -83,10 +84,12 @@ while($row=mysql_fetch_array($result))               //遍历结果数组
   {
    //定义子SQL语句
    //从所有记录中取出该主留言的回复留言
-   $sub_sql="select * from $t_name where re_id='$row[id]' and time>'$row[re_time]'";   //学习双引号里面单引号里面变量的方法,$变量在SQL语句中的写法
-   $result=mysql_query($sub_sql,$my_connect);
+   $sub_sql="select * from $t_name where re_id=$row[id] ";   //学习双引号里面单引号里面变量的方法,$变量在SQL语句中的写法,sql时间类型数据可以比较大小？（字符串 ),and time>='$row[re_time]',我觉得没有必要判断时间
+   $result2=mysql_query($sub_sql,$my_connect) or die(mysql_error());
    $j=0;
-   while($sub_row=mysql_fetch_array($result,my_connect))                //遍历数组sql反馈的结果
+   //echo $sub_sql;
+   //echo $result2;
+   while($sub_row=mysql_fetch_array($result2))                //遍历数组sql反馈的结果
    {
     $j++;
     echo "<tr>\n";
@@ -96,10 +99,10 @@ while($row=mysql_fetch_array($result))               //遍历结果数组
     echo $sub_row[title];
     echo "|";
     echo "作者".$sub_row[username].":回复于".$sub_row[time]."\n";
-    echo "nbsp;|nbsp:";
-    echo "<a href=\"gbook_modify_front.php?action=edit&id=".$sub_row[id]."\">编辑</a>";   
+    echo "&nbsp;|&nbsp;";
+    echo "<a href=\"gbook_manage.php?action=edit&id=".$sub_row[id]."\">编辑</a>";   
     echo "|";
-    echo "<a href=\"gbook_modify_front.php?action=del&id=".$sub_row[id]."\" onclick=\"return conf()\">删除</a>";
+    echo "<a href=\"gbook_manage.php?action=del&id=".$sub_row[id]."\" onclick=\"return conf()\">删除</a>";
     echo "</td>";
     echo "</tr>";
     echo "<tr>";
