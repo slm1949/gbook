@@ -2,57 +2,60 @@
 // base model
 // 实现 CRUD  所有model继承这个
 // 在model 实现对数据库的操作
+class DataAccess {
+	         var $db;
+                 var $query;
+                 function __construct($host,$user,$pass,$db){
+                 $this->connect=mysql_connect($host,$user,$pass);//连接数据库
+                 mysql_select_db($db,$this->connect);
+                 }
+                 function query($sql){
+                 $this->$query=mysql_query($sql,this->connect) or die(mysql_error());//请求MYSQL
+                 }
+                 function getrow(){
+                 if($row=mysql_fetch_array($this->query,MYSQL_ASSOC))
+                            //MYSQL_ASSOC参数决定了数组键名用字段名表示
+                  return $row;
+                 else
+                  return false;//请求结果
+                 }
+}
 class BaseModel {
-	public function read($id){
-                                   if(!$_GET[page])                                
-                                                 {
-                                                   $page=1;                                      
-                                                  }
-                                   else
-                                               {
-                                                  $page=$_GET[page];                            
-                                               }                                   //获取$page
-                                  include WEBROOT.'config'.DS.'db.config.php';     //调用通用配置文件
-                                  $sql="select id from $t_name where re_id=0";    //查询所有记录
-                                  $result=mysql_query($sql,$my_connect);
-                                  $re_num=mysql_num_rows($result);                //获取所有留言数
-                                  $page_z=ceil($re_num/$p_num);                   //获取留言显示的页数
-                                  $temp=($page-1)*$p_num;                         //定义临时变量$temp,为
-                                  $sql="select * from $t_name where re_id=0 order by re_time desc limit $temp,$p_num";
-                                  $result=mysql_query($sql,$my_connect) or die(mysql_error());
-                                  while($row=mysql_fetch_array($result))               //遍历结果数组
-                                   {
-                                     $temp++;                                            //循环变量自增
- 
-                                     if($row[re_num]>0)
-                                        {
-                                            //从所有记录中取出该主留言的回复留言
-                                        $sub_sql="select * from $t_name where re_id=$row[id] ";  
-                                        $result2=mysql_query($sub_sql,$my_connect) or die(mysql_error());
-                                        $j=0;
-                                        while($sub_row=mysql_fetch_array($result2))                //遍历数组sql反馈的结果
-                                             {
-                                                 $j++;
-   
-     }               //结束 while $sub_row
-   }                 //结束 if $row
-}                    //结束 while $row
+                 var $dao;//DataAccess类
+                 function __construct($dao){
+                  $this->dao=$dao;
+                 }
+                 public function read($t_name){                 //读取留言信息
+                 $sql="select * from $t_name  order by id asc";
+                 $dao->query($sql);
+                 return $dao->getrow();               //返回结果数组                 
+                  }
+                 public function create($t_name,$username,$title,$content,$re_id,$face,$time,$re_time){  //添加留言
+                  $sql="insert into $t_name(username,title,content,re_id,face,time,re_time,re_num)
+                        values ('$username','$title','$content',$re_id,'$face','$time','$re_time',0)";
+                  $dao->query($sql);
+	         }
 
+	         public function update($t_name,$username,$title,$content,$face,$id){
+                 $sql="update $t_name set username='$username',title='$title',content='$content',face='$face' where id=$id";
+                 $dao->query($sql);
+	         }
 
+	          public function delete($t_name,$id){                                    //删除留言
+                   $t_sql="select re_id from $t_name where id=$id";
+                   $dao->query($t_sql);
+                   $row=$dao->getrow();
+                   if($row[re_id]!=0){                //如果删除的留言为某主题的回复
+                      $dao->query($up_sql);
+                      $sql="delete from $t_name where id=$id";
+                      $dao->query($sql);
+                    }
+                   else{                           //如果留言为主题
+                    $sql="delete from $t_name where id=$id or re_id=$id";  //删除记录的sql语句，删除主题及其回复
+                    $dao->query($sql);
+                    }
+	          }
 
-	}
-
-	public function create($object){
-
-	}
-
-	public function update($object){
-
-	}
-
-	public function delete($object){
-
-	}
 }
 
 ?>
