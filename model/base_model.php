@@ -22,36 +22,36 @@ class DataAccess {
 }
 class BaseModel {
                  var $dao;//DataAccess类
-                 function __construct($dao){
+                 function __construct(&$dao){      //地址传值
                   $this->dao=$dao;
                  }
-                 public function read($t_name){                 //读取留言信息
-                 $sql="select * from $t_name  order by id asc";
+                 public function read($user){                 //读取留言信息
+                 $sql="select * from $user[t_name]  order by id asc";
                  $dao->query($sql);
                  return $dao->getrow();               //返回结果数组                 
                   }
-                 public function create($t_name,$username,$title,$content,$re_id,$face,$time,$re_time){  //添加留言
+                 public function create($user){  //添加留言
                   $sql="insert into $t_name(username,title,content,re_id,face,time,re_time,re_num)
-                        values ('$username','$title','$content',$re_id,'$face','$time','$re_time',0)";
+                        values ('$user[username]','$user[title]','$user[content]',$user[re_id],'$user[face]','$user[time]','$user[re_time]',0)";
                   $dao->query($sql);
 	         }
 
-	         public function update($t_name,$username,$title,$content,$face,$id){
-                 $sql="update $t_name set username='$username',title='$title',content='$content',face='$face' where id=$id";
+	         public function update($user){
+                 $sql="update $t_name set username='$user[username]',title='$user[title]',content='$user[content]',face='$user[face]' where id=$user[id]";
                  $dao->query($sql);
 	         }
 
-	          public function delete($t_name,$id){                                    //删除留言
-                   $t_sql="select re_id from $t_name where id=$id";
+	          public function delete($user){                                    //删除留言
+                   $t_sql="select re_id from $user[t_name] where id=$user[id]";
                    $dao->query($t_sql);
                    $row=$dao->getrow();
                    if($row[re_id]!=0){                //如果删除的留言为某主题的回复
                       $dao->query($up_sql);
-                      $sql="delete from $t_name where id=$id";
+                      $sql="delete from $user[t_name] where id=$user[id]";
                       $dao->query($sql);
                     }
                    else{                           //如果留言为主题
-                    $sql="delete from $t_name where id=$id or re_id=$id";  //删除记录的sql语句，删除主题及其回复
+                    $sql="delete from $user[t_name] where id=$user[id] or re_id=$user[id]";  //删除记录的sql语句，删除主题及其回复
                     $dao->query($sql);
                     }
 	          }
