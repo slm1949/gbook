@@ -12,7 +12,9 @@ class BaseModel {
                  $sql="select * from $t_name order by id asc";
                  //echo $sql;
                  $this->dao->query($sql);
-                 return $this->dao->getrow();               //返回结果数组                 
+                      $i=0;
+                    while($temp[$i++]=$this->dao->getrow());
+                   return $temp;            //返回结果数组            
                   }
                  public function create($user){  //添加留言
                   $t_name=$this->dao->gett_name();
