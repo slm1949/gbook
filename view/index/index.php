@@ -5,17 +5,37 @@
     public function __construct($model){
      $this->model=$model;
     }
-    public function display(){
-     echo '输出一条留言';
-     print_r($this->output);
-    }
   }
   class ShowView extends View{
     public function __construct($model){
-    //parent::__construct($model); 
-   $this->model=$model;
-   $this->output=$this->model->read();
-        }
+       //parent::__construct($model); 
+        $this->model=$model;
+        $this->output=$this->model->read();
+    }
+    public function display(){
+      $title='留言显示';
+      include VIEW.DS.'common'.DS.'header.php';
+      //var_dump($this->output);
+       $mun=0;
+      echo "<table border=\"1\">";
+      foreach($this->output as $temp){
+      $mun++;
+      echo "<tr>\n";
+      echo "<td>\n";
+      echo '主题'.$mun.':'.$temp[title].'作者'.$temp[username].'写于：'.$temp[time];
+      echo "</td>\n";
+      echo "</tr>\n";
+      echo "<tr>\n";
+      echo "<td>\n";
+      echo $temp[content];
+      echo "</td>\n";
+      echo "</tr>\n";
+     // echo '<br>';
+      //var_dump($temp);
+      }
+      echo '</table>';
+      include VIEW.DS.'common'.DS.'footer.php';
+    }
   }
   class AddView extends View{
    public function __construct($model,$user){
