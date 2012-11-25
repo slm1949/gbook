@@ -13,7 +13,12 @@ class BaseModel {
                  //echo $sql;
                  $this->dao->query($sql);
                       $i=0;
-                    while($temp[$i++]=$this->dao->getrow());
+                    while($t=$this->dao->getrow()){
+                     if($t){
+                     $temp[$i++]=$t;
+                     
+                      }
+                    }
                    return $temp;            //返回结果数组            
                   }
                  public function create($user){  //添加留言
