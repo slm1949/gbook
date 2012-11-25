@@ -32,11 +32,11 @@ $model=new NoteModel($dao);  //建立了一个数据处理的对象
   $controller=new DelecteController($dao);
   break;
   default:
-  echo 'case defalt 被执行';
+  //echo 'case defalt 被执行';
   $controller=new ShowController($model);//$model是NoteMode类型 
      
  }
 $view=$controller->getView(); //获取视图对象
-echo '获取视图正确';
+//echo '获取视图正确';
 $view->display();             //输出HTML
 
